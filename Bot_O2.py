@@ -18,12 +18,39 @@ logging.basicConfig(level=logging.INFO)
 bot = Bot(token = API_TOKEN)
 dp = Dispatcher(bot)
 
-async def Message(bus, check_trafic):
-		print ("Hellow")
-		await bot.send_message(386869436, "\u2705 Комплект %s \n \u267b\ufe0f Трафик: %s Mb"% (bus, check_trafic))
-		#await asyncio.sleep(1)
-
-
+async def Send_Message(bus, result_status):
+	Klient = Check_From_Table(bus)[0]
+	if result_status == 0:
+		pass
+	elif result_status == 1:
+		await bot.send_message(386869436, "Клиент: {0} \n Комплект: {1} \n Статус: {2}".format(Klient ,bus, result_status))
+	elif result_status == 2:
+		await bot.send_message(386869436, "Клиент: {0} \n Комплект: {1} \n Статус: {2}".format(Klient ,bus, result_status))
+	elif result_status == 3:
+		await bot.send_message(386869436, "Клиент: {0} \n Комплект: {1} \n Статус: {2}".format(Klient ,bus, result_status))
+	elif result_status == 4:
+		await bot.send_message(386869436, "\u26a0\ufe0f \n \
+		Клиент: {0} \n Комплект: {1} \n Статус: {2}".format(Klient ,bus, result_status))
+	elif result_status == 5:
+		await bot.send_message(386869436, "Клиент: {0} \n Комплект: {1} \n Статус: {2}".format(Klient ,bus, result_status))
+	elif result_status == 6:
+		await bot.send_message(386869436, "Клиент: {0} \n Комплект: {1} \n Статус: {2}".format(Klient ,bus, result_status))
+	elif result_status == 7:
+		await bot.send_message(386869436, "Клиент: {0} \n Комплект: {1} \n Статус: {2}".format(Klient ,bus, result_status))
+	elif result_status == 8:
+		await bot.send_message(386869436, "\u26a0\ufe0f \u26a0\ufe0f \n \
+		Клиент: {0} \n Комплект: {1} \n Статус: {2}".format(Klient ,bus, result_status))
+	elif result_status == 9:
+		await bot.send_message(386869436, "Komplect {0} Status: {1}".format(bus, result_status))
+	elif result_status == 10:
+		await bot.send_message(386869436, "Komplect {0} Status: {1}".format(bus, result_status))
+	elif result_status == 11:
+		await bot.send_message(386869436, "Komplect {0} Status: {1}".format(bus, result_status))
+	elif result_status == 12:
+		await bot.send_message(386869436, "\u26a0\ufe0f \u26a0\ufe0f \u26a0\ufe0f \n \
+		Клиент: {0} \n Комплект: {1} \n Статус: {2}".format(Klient ,bus, result_status))
+	else:
+		pass
 async def Check_O2(bus):
 	print ("Запущена проверка автобусов О2", ctime())
 	online = True
@@ -38,8 +65,10 @@ async def Check_O2(bus):
 				print (Bus_Info)
 				check_trafic = Connection_O2(bus, Bus_Info[0][0], Bus_Info[0][1], Bus_Info[0][2])
 				print ("Печатаю сообщение")
-				await bot.send_message(386869436, "\u2705 Комплект %s \n \u267b\ufe0f Трафик: %s Mb"% (bus, check_trafic))
-				print("Засыпаю на 30 секунд ", ctime())
+				#await bot.send_message(386869436, "\u2705 Комплект %s \n \u267b\ufe0f Трафик: %s Mb"% (bus, check_trafic))
+				print("Засыпаю на 60 секунд ", ctime())
+				result_status = Status(bus)
+				await Send_Message(bus, result_status)
 				await asyncio.sleep(60)
 			else: 
 				print ("Checked 2: False")
@@ -47,14 +76,14 @@ async def Check_O2(bus):
 				Db_null_trafic = "UPDATE Check_O2 SET Trafic0 = ? WHERE Bus = ?"
 				DB_O2.cursor.execute(Db_null_trafic, [0 ,bus])
 				DB_O2.connect.commit()
-				print ("Засыпаю на 5 минут ", ctime())
+				print ("Засыпаю на 60 секунд ", ctime())
 				await asyncio.sleep(60)
 		except Exception as e:
 			print("EXCEPTION :", e ,ctime())
 			pass
 
 
-async def Check_O2_Eline_Test(bus):
+"""async def Check_O2_Eline_Test(bus):
 	print ("Запущена проверка автобусов О2", ctime())
 	online = True
 	while online == True:
@@ -80,7 +109,6 @@ async def Check_O2_Eline_Test(bus):
 			DB_O2.connect.commit()
 			print ("Засыпаю на 5 минут ", ctime())
 			await asyncio.sleep(60)
-
 async def Check_O2_Eline_Test2(bus):
 	print ("Запущена проверка автобусов О2", ctime())
 	online = True
@@ -111,7 +139,7 @@ async def Check_O2_Eline_Test2(bus):
 				await asyncio.sleep(60)
 		except Exception as e:
 			print("EXCEPTION :", e ,ctime())
-			pass
+			pass"""
 
 async def Check_Status(bus_number):
 	Status(bus_number)

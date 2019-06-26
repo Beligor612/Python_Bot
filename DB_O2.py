@@ -78,12 +78,71 @@ def Trafic_Down(trafic, bus):
 		print ("Трафик по комплекту {0} удачно отложено {1} !!!!".format(bus, trafic), '\n')
 		return True
 
-async def Status(bus):
-	exe = "SELECT Status FROM CHECK_O2 WHERE Bus =?"
-	status = cursor.execute(exe, [bus]).fetchall()
-	print (status)
+def Check_Status(trafic, status, bus):
+	if trafic >= 10000.0 and status == 0:
+		status = 1
+		Status_up(bus, status)
+		return status
+	elif trafic >= 15000.0 and status == 1:
+		status = 2
+		Status_up(bus, status)
+		return status
+	elif trafic >= 18000.0 and status == 2:
+		status = 3
+		Status_up(bus, status)
+		return status
+	elif trafic >= 20000.0 and status == 3:
+		status = 4
+		Status_up(bus, status)
+		return status
+	elif trafic >= 30000.0 and status == 4:
+		status = 5
+		Status_up(bus, status)
+		return status
+	elif trafic >= 35000.0 and status == 5:
+		status = 6
+		Status_up(bus, status)
+		return status
+	elif trafic >= 38000.0 and status == 6:
+		status = 7
+		Status_up(bus, status)
+		return status
+	elif trafic >= 40000.0 and status == 7:
+		status = 8
+		Status_up(bus, status)
+		return status
+	elif trafic >= 50000.0 and status == 8:
+		status = 9
+		Status_up(bus, status)
+		return status
+	elif trafic >= 55000.0 and status == 9:
+		status = 10
+		Status_up(bus, status)
+		return status
+	elif trafic >= 58000.0 and status == 10:
+		status = 11
+		Status_up(bus, status)
+		return status
+	elif trafic >= 60000.0 and status == 11:
+		status = 12
+		Status_up(bus, status)
+		return status
+	else:
+		status = 0
 	return status
+def Status_up(bus, status):
+	exe = "UPDATE CHECK_O2 SET Status = ? WHERE Bus =?"
+	status_up = cursor.execute(exe, [status, bus])
+	connect.commit()
 
+def Status(bus):
+	exe = "SELECT Trafic FROM CHECK_O2 WHERE Bus =?"
+	exe_status = "SELECT Status FROM CHECK_O2 WHERE Bus =?"
+	trafic = cursor.execute(exe, [bus]).fetchall()[0][0]
+	status = cursor.execute(exe_status, [bus]).fetchall()[0][0]
+	result_status = Check_Status(trafic, status, bus)
+	print ("result_status: " ,result_status)
+	return result_status
 
 if __name__ == "__main__":
 	Exex_1()
