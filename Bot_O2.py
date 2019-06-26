@@ -26,42 +26,42 @@ async def Send_Message(bus, result_status):
 		print ("Null")
 	elif result_status == 1:
 		print("PECHAT: ", Klient, bus, result_status)
-		await bot.send_message(386869436, "Клиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 10 GB".format(Klient ,bus, result_status))
+		await bot.send_message(-391405470, "Клиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 10 GB".format(Klient ,bus, result_status))
 	elif result_status == 2:
 		print("PECHAT: ", Klient, bus, result_status)
-		await bot.send_message(386869436, "Клиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 15 GB".format(Klient ,bus, result_status))
+		await bot.send_message(-391405470, "Клиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 15 GB".format(Klient ,bus, result_status))
 	elif result_status == 3:
 		print("PECHAT: ", Klient, bus, result_status)
-		await bot.send_message(386869436, "Клиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 18 GB".format(Klient ,bus, result_status))
+		await bot.send_message(-391405470, "Клиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 18 GB".format(Klient ,bus, result_status))
 	elif result_status == 4:
 		print("PECHAT: ", Klient, bus, result_status)
-		await bot.send_message(386869436, "\u26a0\ufe0f \u26a0\ufe0f \u26a0\ufe0f \u26a0\ufe0f \u26a0\ufe0f\n \
+		await bot.send_message(-391405470, "\u26a0\ufe0f \u26a0\ufe0f \u26a0\ufe0f \u26a0\ufe0f \u26a0\ufe0f\n \
 		Клиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 20 GB".format(Klient ,bus, result_status))
 	elif result_status == 5:
 		print("PECHAT: ", Klient, bus, result_status)
-		await bot.send_message(386869436, "Клиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 30 GB".format(Klient ,bus, result_status))
+		await bot.send_message(-391405470, "Клиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 30 GB".format(Klient ,bus, result_status))
 	elif result_status == 6:
 		print("PECHAT: ", Klient, bus, result_status)
-		await bot.send_message(386869436, "Клиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 35 GB".format(Klient ,bus, result_status))
+		await bot.send_message(-391405470, "Клиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 35 GB".format(Klient ,bus, result_status))
 	elif result_status == 7:
 		print("PECHAT: ", Klient, bus, result_status)
-		await bot.send_message(386869436, "Клиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 38 GB".format(Klient ,bus, result_status))
+		await bot.send_message(-391405470, "Клиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 38 GB".format(Klient ,bus, result_status))
 	elif result_status == 8:
 		print("PECHAT: ", Klient, bus, result_status)
-		await bot.send_message(386869436, "\u26a0\ufe0f \u26a0\ufe0f \u26a0\ufe0f \u26a0\ufe0f \u26a0\ufe0f\n \
+		await bot.send_message(-391405470, "\u26a0\ufe0f \u26a0\ufe0f \u26a0\ufe0f \u26a0\ufe0f \u26a0\ufe0f\n \
 		Клиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 40 GB ".format(Klient ,bus, result_status))
 	elif result_status == 9:
 		print("PECHAT: ", Klient, bus, result_status)
-		await bot.send_message(386869436, "Клиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 50 GB".format(Klient ,bus, result_status))
+		await bot.send_message(-391405470, "Клиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 50 GB".format(Klient ,bus, result_status))
 	elif result_status == 10:
 		print("PECHAT: ", Klient, bus, result_status)
-		await bot.send_message(386869436, "Клиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 55 GB".format(Klient ,bus, result_status))
+		await bot.send_message(-391405470, "Клиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 55 GB".format(Klient ,bus, result_status))
 	elif result_status == 11:
 		print("PECHAT: ", Klient, bus, result_status)
-		await bot.send_message(386869436, "Клиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 58 GB".format(Klient ,bus, result_status))
+		await bot.send_message(-391405470, "Клиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 58 GB".format(Klient ,bus, result_status))
 	elif result_status == 12:
 		print("PECHAT: ", Klient, bus, result_status)
-		await bot.send_message(386869436, "\u26a0\ufe0f \u26a0\ufe0f \u26a0\ufe0f \u26a0\ufe0f \u26a0\ufe0f\n \
+		await bot.send_message(-391405470, "\u26a0\ufe0f \u26a0\ufe0f \u26a0\ufe0f \u26a0\ufe0f \u26a0\ufe0f\n \
 		Клиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 60 GB".format(Klient ,bus, result_status))
 	else:
 		print ("Null")
