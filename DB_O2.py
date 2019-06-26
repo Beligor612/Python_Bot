@@ -128,7 +128,7 @@ def Check_Status(trafic, status, bus):
 		Status_up(bus, status)
 		return status
 	else:
-		status = 0
+		print ("None")
 	return status
 def Status_up(bus, status):
 	exe = "UPDATE CHECK_O2 SET Status = ? WHERE Bus =?"
@@ -141,7 +141,7 @@ def Status(bus):
 	trafic = cursor.execute(exe, [bus]).fetchall()[0][0]
 	status = cursor.execute(exe_status, [bus]).fetchall()[0][0]
 	result_status = Check_Status(trafic, status, bus)
-	print ("result_status: " ,result_status)
+	#print ("result_status: " ,result_status)
 	return result_status
 
 if __name__ == "__main__":
