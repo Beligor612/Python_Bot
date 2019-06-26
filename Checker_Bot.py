@@ -90,6 +90,7 @@ async def online(message: types.Message):
 	\n Клиент:  {1} \
 	\n Тарифы: \n {2} | {3} \n {4} | {5} \n {6} | {7}\n {8} | {9}\n \
 	Был в сети: {10}".format(number_complect ,cft[0],cft[1],cft[5],cft[2],cft[6],cft[3],cft[7],cft[4],cft[8],cft[9], message.from_user.username, cft[10])
+	
 	while Onl:
 		try:
 			#cft_print = "@{11} \n \u2705 Комплект {0} в сети \n \u26a0\ufe0f Коментарий: {12} \n Клиент:  {1} \n Тарифы: \n {2} | {3} \n {4} | {5} \n {6} | {7}\n {8} | {9}\n Был в сети: {10}".format(number_complect ,cft[0],cft[1],cft[5],cft[2],cft[6],cft[3],cft[7],cft[4],cft[8],cft[9], message.from_user.username, cft[10])
