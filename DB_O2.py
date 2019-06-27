@@ -79,55 +79,56 @@ def Trafic_Down(trafic, bus):
 		return True
 
 def Check_Status(trafic, status, bus):
-	if trafic >= 10000.0 and status == 0:
+	if trafic > 10000.0 and status == 0:
 		status = 1
 		Status_up(bus, status)
 		return status
-	elif trafic >= 15000.0 and status == 1:
+	elif trafic > 15000.0 and status == 1:
 		status = 2
 		Status_up(bus, status)
 		return status
-	elif trafic >= 18000.0 and status == 2:
+	elif trafic > 18000.0 and status == 2:
 		status = 3
 		Status_up(bus, status)
 		return status
-	elif trafic >= 20000.0 and status == 3:
+	elif trafic > 20000.0 and status == 3:
 		status = 4
 		Status_up(bus, status)
 		return status
-	elif trafic >= 30000.0 and status == 4:
+	elif trafic > 30000.0 and status == 4:
 		status = 5
 		Status_up(bus, status)
 		return status
-	elif trafic >= 35000.0 and status == 5:
+	elif trafic > 35000.0 and status == 5:
 		status = 6
 		Status_up(bus, status)
 		return status
-	elif trafic >= 38000.0 and status == 6:
+	elif trafic > 38000.0 and status == 6:
 		status = 7
 		Status_up(bus, status)
 		return status
-	elif trafic >= 40000.0 and status == 7:
+	elif trafic > 40000.0 and status == 7:
 		status = 8
 		Status_up(bus, status)
 		return status
-	elif trafic >= 50000.0 and status == 8:
+	elif trafic > 50000.0 and status == 8:
 		status = 9
 		Status_up(bus, status)
 		return status
-	elif trafic >= 55000.0 and status == 9:
+	elif trafic > 55000.0 and status == 9:
 		status = 10
 		Status_up(bus, status)
 		return status
-	elif trafic >= 58000.0 and status == 10:
+	elif trafic > 58000.0 and status == 10:
 		status = 11
 		Status_up(bus, status)
 		return status
-	elif trafic >= 60000.0 and status == 11:
+	elif trafic > 60000.0 and status == 11:
 		status = 12
 		Status_up(bus, status)
 		return status
 	else:
+		status = 0
 		print ("None")
 	return status
 def Status_up(bus, status):
