@@ -72,6 +72,15 @@ async def Active_Complekt(Komplect):
 		else:
 			return False 
 
+def Active_For_O2():
+	Connection()
+	list_active = []
+	active_complect = Active()
+	for active in active_complect:
+		list_active.append(active[0].lstrip())
+	Close_Connection()
+	return list_active
+
 if __name__ =='__main__':
 	Connection();
 	Active();
