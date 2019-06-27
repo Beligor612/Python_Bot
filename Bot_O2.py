@@ -67,109 +67,40 @@ async def Send_Message(bus, result_status):
 	else:
 		print ("Null")
 
-async def Check_O2(bus):
-	print ("Запущена проверка автобусов О2", ctime())
-	online = True
-	while online == True:
+async def Check_O2(bus_number):
+	List_Checked = []
+	while True:
 		try:
-			print ("Check 1", bus)
-			O2_Online = await asyncio.create_task(Active_Complekt(bus))
-			print("Комплект в сети: ", O2_Online)
-			if O2_Online == True:
-				print ("Checked 2: True")
-				Bus_Info = Exex_3(bus)
-				print (Bus_Info)
-				check_trafic = Connection_O2(bus, Bus_Info[0][0], Bus_Info[0][1], Bus_Info[0][2])
-				print ("Печатаю сообщение")
-				#await bot.send_message(386869436, "\u2705 Комплект %s \n \u267b\ufe0f Трафик: %s Mb"% (bus, check_trafic))
-				print("Засыпаю на 60 секунд ", ctime())
-				result_status = Status(bus)
-				await Send_Message(bus, result_status)
-				await asyncio.sleep(60)
-			else: 
-				print ("Checked 2: False")
-				print("Bus: ", bus)
-				Db_null_trafic = "UPDATE Check_O2 SET Trafic0 = ? WHERE Bus = ?"
-				DB_O2.cursor.execute(Db_null_trafic, [0 ,bus])
-				DB_O2.connect.commit()
-				print ("Засыпаю на 60 секунд ", ctime())
-				await asyncio.sleep(60)
+			bus_active = Active_For_O2()
+			print("bus_archive: ", bus_archive)
+			for bus_number in bus_archive:
+				if bus_number in bus_active:
+					 List_Checked.append(bus_number)
+				else:
+					print("Komplect {0} Offline".format(bus_number))
+
+			await asyncio.gather(*[Checked_O2(bus_number) for bus_number in List_Checked])
 		except Exception as e:
 			print("EXCEPTION :", e ,ctime())
 			pass
-
-
-"""async def Check_O2_Eline_Test(bus):
-	print ("Запущена проверка автобусов О2", ctime())
-	online = True
-	while online == True:
-		print ("Check 1", bus)
-		O2_Online = await asyncio.create_task(Active_Complekt(bus))
-		print("Комплект в сети: ", O2_Online)
-		if O2_Online == True:
-			print ("Checked 2: True")
-			Bus_Info = Exex_3(bus)
-			print (Bus_Info)
-			check_trafic = Connection_O2(bus, Bus_Info[0][0], Bus_Info[0][1], Bus_Info[0][2])
-			print ("Печатаю сообщение")
-			await bot.send_message(386869436, "\u2705 Комплект %s \n \u267b\ufe0f Трафик: %s Mb"% (bus, check_trafic))
-			#await asyncio.wait_for(await bot.send_message(386869436, "\u2705 Комплект %s \n \u267b\ufe0f Трафик: %s Mb"% (bus, check_trafic)),timeout = 1.0)
-			#await Message(bus,check_trafic)
-			print("Засыпаю на 30 секунд ", ctime())
-			await asyncio.sleep(60)
-		else: 
-			print ("Checked 2: False")
-			print("Bus: ", bus)
-			Db_null_trafic = "UPDATE Check_O2 SET Trafic0 = ? WHERE Bus = ?"
-			DB_O2.cursor.execute(Db_null_trafic, [0 ,bus])
-			DB_O2.connect.commit()
-			print ("Засыпаю на 5 минут ", ctime())
-			await asyncio.sleep(60)
-async def Check_O2_Eline_Test2(bus):
-	print ("Запущена проверка автобусов О2", ctime())
-	online = True
-	while online == True:
-		try:
-			print ("Check 1", bus)
-			O2_Online = await asyncio.wait_for(Active_Complekt(bus),15)
-			print("Комплект в сети: ", O2_Online)
-			if O2_Online == True:
-				#async_timeout.timeout(10)
-				print ("Checked 2: True")
-				Bus_Info = Exex_3(bus)
-				print (Bus_Info)
-				check_trafic = Connection_O2(bus, Bus_Info[0][0], Bus_Info[0][1], Bus_Info[0][2])
-				print ("Печатаю сообщение")
-				await Message(bus, check_trafic)
-				#task = asyncio.create_task(bot.send_message(386869436, "\u2705 Комплект %s \n \u267b\ufe0f Трафик: %s Mb"% (bus, check_trafic)))
-				#await task
-				print("Засыпаю на 3 секунды ", ctime())
-				await asyncio.sleep(3)
-			else: 
-				print ("Checked 2: False")
-				print("Bus: ", bus)
-				Db_null_trafic = "UPDATE Check_O2 SET Trafic0 = ? WHERE Bus = ?"
-				DB_O2.cursor.execute(Db_null_trafic, [0 ,bus])
-				DB_O2.connect.commit()
-				print ("Засыпаю на 5 минут ", ctime())
-				await asyncio.sleep(60)
-		except Exception as e:
-			print("EXCEPTION :", e ,ctime())
-			pass"""
+		print("I Am Sleeep!!!!")
+		print("List_Checked: ", List_Checked)
+		await asyncio.sleep(1)
 
 async def Check_Status(bus_number):
 	Status(bus_number)
 
 async def Run_Check_O2():
-	while True:
-		bus_archive = Exex_1()
-		print("Bus_Checked:", bus_checked)
-		print("Active active_complect: ", active_complect)
-		print ("Running Check O2")
-		#print (type(bus_archive), bus_archive[0])
-		#tasks = []
-		#await asyncio.gather(*[Check_O2(bus_number) for bus_number in bus_checked])
-		#await asyncio.sleep(120)
+	bus_archive = Exex_1()
+	#print("Bus_Checked:", bus_checked)
+	#print("Active active_complect: ", active_complect)
+	print ("Running Check O2")
+	task = asyncio.create_task(Check_O2(bus_archive))
+	await task
+	#print (type(bus_archive), bus_archive[0])
+	#tasks = []
+	#await asyncio.gather(*[Check_O2(bus_number) for bus_number in bus_checked])
+	#await asyncio.sleep(120)
 
 if __name__ == "__main__":
 	loop = asyncio.get_event_loop()

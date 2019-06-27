@@ -78,7 +78,6 @@ async def Checked_O2(bus_number):
 	result_status = Status(bus_number)
 	await Send_Message(bus_number, result_status)
 
-
 async def Check_O2(bus_archive):
 	List_Checked = []
 	while True:
@@ -128,7 +127,6 @@ async def Check_O2(bus_archive):
 		except Exception as e:
 			print("EXCEPTION :", e ,ctime())
 			pass"""
-
 
 """async def Check_O2_Eline_Test(bus):
 	print ("Запущена проверка автобусов О2", ctime())

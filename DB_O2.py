@@ -111,6 +111,8 @@ def Check_Status(trafic, status, bus):
 		status = 8
 		Status_up(bus, status)
 		return status
+
+
 	elif trafic > 50000.0 and status == 8:
 		status = 9
 		Status_up(bus, status)
@@ -131,6 +133,7 @@ def Check_Status(trafic, status, bus):
 		status = 0
 		print ("None")
 	return status
+
 def Status_up(bus, status):
 	exe = "UPDATE CHECK_O2 SET Status = ? WHERE Bus =?"
 	status_up = cursor.execute(exe, [status, bus])
