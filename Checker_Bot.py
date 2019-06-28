@@ -11,28 +11,10 @@ import async_timeout
 
 API_TOKEN = '827561598:AAGquO8dzrIjwT5YbJbFFE0_GeqSiac6t0c'
 
-
-# Configure logging
 logging.basicConfig(level=logging.INFO)
 
-# Initialize bot and dispatcher
 bot = Bot(token = API_TOKEN)
 dp = Dispatcher(bot)
-
-"""async def Convert_Number(number_complect):
-		print ("Запущена конвертация номера комплекта")
-		if len(number_complect) == 1:
-			number_complect = "bus000" + str(number_complect)
-		if len(number_complect) == 2:
-			number_complect = "bus00" + str(number_complect)
-		if len(number_complect) == 3:
-			number_complect = "bus0" + str(number_complect)
-		if len(number_complect) == 4:
-			number_complect = "bus" + str(number_complect)
-		print (number_complect, type(number_complect))
-		await asyncio.sleep(0.1)
-		return number_complect"""
-
 
 @dp.message_handler(commands = ['check'])
 async def check(message: types.Message):
@@ -48,17 +30,8 @@ async def check(message: types.Message):
 		number_complect = "bus0" + str(number_complect)
 	if len(number_complect) == 4:
 		number_complect = "bus" + str(number_complect)
-	#print (number_complect, type(number_complect))
-	#print ("NUMBER: ",number_complect)
-	#print(number_complect)
-	#print (message.chat.id, '\n',
-			#message.from_user.id, '\n',
-			#message.from_user.username, '\n',
-			#number_complect)
 	Online = await Active_Complekt(number_complect)
-	#print (" Number: ", number_complect, '\n',"Online: ",Online, '\n',"Time: ",ctime(), '\n')
 	cft = Check_From_Table(number_complect)
-	#print ("CFT: ", cft)
 	cft_print = "@{11} \n \u2705 Комплект {0} в сети \n Клиент:  {1} \n Тарифы: \n {2} | {3} \n {4} | {5} \n {6} | {7}\n {8} | {9}\n Был в сети: {10}".format(number_complect ,cft[0],cft[1],cft[5],cft[2],cft[6],cft[3],cft[7],cft[4],cft[8],cft[9],message.from_user.username)
 	cft_print2 = "@{11} \n \u274c Комплект {0} не в сети \n Клиент:  {1} \n Тарифы: \n {2} | {3} \n {4} | {5} \n {6} | {7}\n {8} | {9}\n Был в сети: {10}".format(number_complect ,cft[0],cft[1],cft[5],cft[2],cft[6],cft[3],cft[7],cft[4],cft[8],cft[9],message.from_user.username)
 	if Online == True:
@@ -110,5 +83,6 @@ async def online(message: types.Message):
 		except Exception as e:
 			print("Exception raising at : ", ctime(), e)
 			pass
+
 if __name__ == '__main__':
 	executor.start_polling(dp)
