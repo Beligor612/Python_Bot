@@ -105,7 +105,7 @@ async def Check_O2(bus_archive):
 				else:
 					print("Komplect {0} Offline".format(bus_number))
 
-			await asyncio.gather(*[Checked_O2(bus_number) for bus_number in List_Checked])
+			await asyncio.wait_for(asyncio.gather(*[Checked_O2(bus_number) for bus_number in List_Checked]), 15)
 		except Exception as e:
 			print("EXCEPTION :", e ,ctime())
 			pass
