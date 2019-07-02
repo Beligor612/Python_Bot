@@ -3,7 +3,7 @@ from Mikrotik import Active_Complekt, Active, Connection_O2, Active_For_O2
 from aiogram import Bot, Dispatcher, executor, types
 import asyncio
 from time import ctime
-from DB_O2 import Exex_2, Exex_1, Exex_3, Status
+from DB_O2 import Exex_2, Exex_1, Exex_3, Status, Traffic_Null
 from Check_All_Base import Check_From_Table
 import random
 import DB_O2
@@ -102,16 +102,21 @@ async def Check_O2(bus_archive):
 			for bus_number in bus_archive:
 				if bus_number in bus_active:
 					 List_Checked.append(bus_number)
+					 #asyncio.wait_for(asyncio.create_task(bus_number),15)
 				else:
+					Traffic_Null(bus_number)
 					print("Komplect {0} Offline".format(bus_number))
-
-			await asyncio.wait_for(asyncio.gather(*[Checked_O2(bus_number) for bus_number in List_Checked]), 15)
+			for bus in List_Checked:
+				asyncio.wait_for(asyncio.create_task(Checked_O2(bus)),15)
+				#del List_Checked[bus]
+			#await asyncio.wait_for(asyncio.gather(*[Checked_O2(bus_number) for bus_number in List_Checked]), 15)
 		except Exception as e:
 			print("EXCEPTION :", e ,ctime())
 			pass
 		print("I Am Sleeep!!!!")
 		print("List_Checked: ", List_Checked)
-		await asyncio.sleep(1)
+		List_Checked.clear()
+		await asyncio.sleep(10)
 
 async def Check_Status(bus_number):
 	Status(bus_number)

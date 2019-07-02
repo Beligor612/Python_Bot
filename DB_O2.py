@@ -78,6 +78,13 @@ def Trafic_Down(trafic, bus):
 		print ("Трафик по комплекту {0} удачно отложено {1} !!!!".format(bus, trafic), '\n')
 		return True
 
+
+def Traffic_Null(bus_number):
+	exe = "UPDATE Check_O2 SET Trafic0 = ? WHERE Bus = ?"
+	exe1 = cursor.execute(exe, [0,bus_number])
+	connect.commit()
+
+	
 def Check_Status(trafic, status, bus):
 	if trafic > 10000.0 and status == 0:
 		status = 1
