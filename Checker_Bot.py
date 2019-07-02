@@ -74,6 +74,7 @@ async def online(message: types.Message):
 					#Online = False
 					await bot.send_message(message.chat.id, cft_print)
 					Set_Koment_Null(number_complect)
+					pull_complects.remove(number_complect)
 					await asyncio.sleep(1)
 					Onl = False
 				else:
