@@ -87,13 +87,5 @@ async def online(message: types.Message):
 	else:
 		await bot.send_message(message.chat.id, "\u26a0\ufe0f Checked already running")
 
-
-"""@dp.message_handler(commands = ['Off'])
-async def Offline(message: types.Message):
-	print ("I am destroyed")
-	await bot.delete_message(message.chat.id, message.message_id)
-	sys.exit()"""
-
-
 if __name__ == '__main__':
 	executor.start_polling(dp)

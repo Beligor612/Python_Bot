@@ -36,6 +36,22 @@ def Trafic(Upload, Download):
 	print (str(Sum_Trafic) + " Mb")
 	return Sum_Trafic
 
+async def Connection_For_O2(bus, Adress, Login, Password):
+		Ad = Adress
+		Log = Login
+		Pass = Password
+		ssh_O2 = SSHClient() # Создаем клиент подключения
+		ssh_O2.set_missing_host_key_policy(AutoAddPolicy())# Создаем стек ключей подлкючения для доступа 
+		ssh_O2.connect(Ad, port=22, username=Log, password=Pass)# Подключаемся
+		print("Connection {0} succesfull \n ".format(bus))
+		exe_Upload = "put [interface get [find name=O2] rx-byte]"
+		exe_Download = "put [interface get [find name=O2] tx-byte]"
+		Upload = ssh_O2.exec_command(exe_Upload)[1].read()
+		Download = ssh_O2.exec_command(exe_Download)[1].read()
+		Summa = Trafic(Upload, Download)
+		Trafic_Down(Summa, bus)
+		return Summa
+		
 def Active():
 	exe2 = "/ppp active print" # Создаем запрос для проверки активности комплектов
 	excmd3 = ssh2.exec_command(exe2)[1].read()# Считываем информацию из полученных Байтов
