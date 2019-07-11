@@ -14,7 +14,7 @@ import shelve
 #nest_asyncio.apply()
 API_TOKEN = '855313094:AAFm36oeX-c72ps6itp3Icco8AQrcH4jDcY'
 # Configure logging
-logging.basicConfig(level=logging.INFO, format = ' %(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.DEBUG, format = ' %(asctime)s - %(message)s')
 
 # Initialize bot and dispatcher
 bot = Bot(token = API_TOKEN)
@@ -88,26 +88,30 @@ async def Checked_O2(bus_number):
 	Bus_Info = Exex_3(bus_number)
 	print ("Bus info: ", Bus_Info)
 	check_trafic = await asyncio.wait_for(Connection_For_O2(bus_number, Bus_Info[0][0], Bus_Info[0][1], Bus_Info[0][2]), 15)
-	sh = shelve.open('Timer')
-	sh['Time'] = ctime()
-	sh.close()
+	#sh = shelve.open('Timer')
+	#sh['Time'] = ctime()
+	#sh.close()
 	result_status = Status(bus_number)
 	await Send_Message(bus_number, result_status)
 
 async def Check_O2(bus_archive):
-	List_Checked = []
+	#List_Checked = []
 	while True:
+		List_Checked = []
 		try:
 			bus_active = Active_For_O2()
 			print("bus_archive: ", bus_archive)
 			for bus_number in bus_archive:
 				if bus_number in bus_active:
 					 List_Checked.append(bus_number)
+					 logging.debug(List_Checked)
 					 #asyncio.wait_for(asyncio.create_task(bus_number),15)
 				else:
 					Traffic_Null(bus_number)
 					print("Komplect {0} Offline".format(bus_number))
+					logging.debug('%s Offline'%(bus_number))
 			for bus in List_Checked:
+				logging.debug(List_Checked)
 				await asyncio.wait_for(asyncio.create_task(Checked_O2(bus)),15)
 				#del List_Checked[bus]
 			#await asyncio.wait_for(asyncio.gather(*[Checked_O2(bus_number) for bus_number in List_Checked]), 15)
@@ -115,8 +119,9 @@ async def Check_O2(bus_archive):
 			print("EXCEPTION :", e ,ctime())
 			pass
 		print("I Am Sleeep!!!!")
-		print("List_Checked: ", List_Checked)
-		List_Checked.clear()
+		logging.debug('List_Checked {}'.format(List_Checked))
+		#List_Checked.clear()
+		logging.debug("End GAME")
 		await asyncio.sleep(10)
 
 async def Check_Status(bus_number):
