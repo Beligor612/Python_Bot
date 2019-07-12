@@ -9,7 +9,6 @@ import random
 import DB_O2
 import async_timeout
 import aiohttp
-import shelve
 
 #nest_asyncio.apply()
 API_TOKEN = '855313094:AAFm36oeX-c72ps6itp3Icco8AQrcH4jDcY'
@@ -22,10 +21,10 @@ dp = Dispatcher(bot)
 
 async def Send_Message(bus, result_status):
 	Klient = Check_From_Table(bus)[0]
-	print("KLIENT : ",Klient)
-	print ("STATUS: ", result_status)
+	logging.debug("Send_Message KLIENT : ",Klient)
+	logging.debug("Send_Message STATUS: ", result_status)
 	if result_status == 0:
-		print ("Null")
+		logging.debug("Send_Message STATUS = 0 ---- Null")
 	elif result_status == 1:
 		print("PECHAT: ", Klient, bus, result_status)
 		await bot.send_message(386869436, " \nКлиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: 10 GB".format(Klient ,bus, result_status))
@@ -86,11 +85,8 @@ async def Send_Message(bus, result_status):
 async def Checked_O2(bus_number):
 	logging.debug('Start programm')
 	Bus_Info = Exex_3(bus_number)
-	print ("Bus info: ", Bus_Info)
+	logging.debug("Bus info: ", Bus_Info)
 	check_trafic = await asyncio.wait_for(Connection_For_O2(bus_number, Bus_Info[0][0], Bus_Info[0][1], Bus_Info[0][2]), 15)
-	#sh = shelve.open('Timer')
-	#sh['Time'] = ctime()
-	#sh.close()
 	result_status = Status(bus_number)
 	await Send_Message(bus_number, result_status)
 
@@ -108,7 +104,7 @@ async def Check_O2(bus_archive):
 					 #asyncio.wait_for(asyncio.create_task(bus_number),15)
 				else:
 					Traffic_Null(bus_number)
-					print("Komplect {0} Offline".format(bus_number))
+					logging.debug("Komplect {0} Offline".format(bus_number))
 					logging.debug('%s Offline'%(bus_number))
 			for bus in List_Checked:
 				logging.debug(List_Checked)
@@ -116,11 +112,10 @@ async def Check_O2(bus_archive):
 				#del List_Checked[bus]
 			#await asyncio.wait_for(asyncio.gather(*[Checked_O2(bus_number) for bus_number in List_Checked]), 15)
 		except Exception as e:
-			print("EXCEPTION :", e ,ctime())
+			logging.debug("EXCEPTION : {0}".format(e))
 			pass
-		print("I Am Sleeep!!!!")
+		logging.debug("I Am Sleeep!!!!")
 		logging.debug('List_Checked {}'.format(List_Checked))
-		#List_Checked.clear()
 		logging.debug("End GAME")
 		await asyncio.sleep(10)
 
@@ -129,15 +124,9 @@ async def Check_Status(bus_number):
 
 async def Run_Check_O2():
 	bus_archive = Exex_1()
-	#print("Bus_Checked:", bus_checked)
-	#print("Active active_complect: ", active_complect)
 	print ("Running Check O2")
 	task = asyncio.create_task(Check_O2(bus_archive))
 	await task
-	#print (type(bus_archive), bus_archive[0])
-	#tasks = []
-	#await asyncio.gather(*[Check_O2(bus_number) for bus_number in bus_checked])
-	#await asyncio.sleep(120)
 
 if __name__ == "__main__":
 	loop = asyncio.get_event_loop()
