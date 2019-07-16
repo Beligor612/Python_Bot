@@ -1,5 +1,6 @@
 import sqlite3
 import time
+import datetime
 connect = sqlite3.connect("DB_All_For_Complect.db")
 cursor = connect.cursor()
 
@@ -37,8 +38,10 @@ def Check_From_Table(bus):
 	return Klient,Tarif1,Tarif2,Tarif3,Tarif4,Nomer1,Nomer2,Nomer3,Nomer4,VSeti, Komment
 
 def Set_Time(bus):
+	dt = datetime.datetime.now()
+	dt_string = dt.strftime('%d/%m/%Y %H:%M:%S')
 	set_time = "UPDATE All_Complect SET VSeti = ? WHERE Komplect = ?"
-	set_time_connection = cursor.execute(set_time,[time.ctime(),bus])
+	set_time_connection = cursor.execute(set_time,[dt_string,bus])
 	connect.commit()
 
 def Set_Koment(bus, komment):
