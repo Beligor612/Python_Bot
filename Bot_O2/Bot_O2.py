@@ -5,6 +5,7 @@ import time
 import Mikrot
 import Base_O2
 import aiogram
+import BackUp
 
 API_TOKEN = '855313094:AAFm36oeX-c72ps6itp3Icco8AQrcH4jDcY'
 #logging.disable()
@@ -19,6 +20,10 @@ dp = aiogram.Dispatcher(bot)
 # 3.3) Провести операции с траффиком и записи статусов 
 # 3.4) Вернуть статус и вывести сообщение в бот
 while True:
+	#Часть кода для проверки даты и создания бэкапа таблицы с траффиком по О2
+	backup = BackUp.Need_Beckup()
+	backup.check_date()
+
 	bot_mikrotik = Mikrot.Mikrotik('vpnbus.test.net.ua', 'wifibus', 'BusWifi')
 	bot_mikrotik.Connect()
 	list_All_active = bot_mikrotik.list_active_complect()
@@ -51,5 +56,10 @@ while True:
 
 list_O2.close_session()
 
+#1) Создать пул дат когда необходимо делать бекап
+#2) Проверка сегодняшней даты
+#2.1) Если дата совпадает то делай бекап в папку и переименуй Бд
+#2.2) Если нет то пропускай шаг
+#3) Если произошел бекап обнули всю таблицу по трафику в 00:00
 
 

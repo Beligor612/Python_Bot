@@ -9,7 +9,7 @@ logging.basicConfig(level = logging.DEBUG, format = '%(asctime)s -- %(message)s'
 
 class Mikrotik:
 
-	def __init__(self, ip, login, password):
+	def __init__(self, ip = "vpnbus.test.net.ua", login = 'wifibus', password = 'BusWifi'):
 		self.ip = ip
 		self.login = login
 		self.password = password
