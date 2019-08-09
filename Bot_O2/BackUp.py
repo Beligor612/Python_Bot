@@ -4,7 +4,7 @@ import sqlite3
 import os
 import shutil
 import logging
-logging.disable()
+#logging.disable()
 logging.basicConfig(level = logging.DEBUG, 
 					format = '-- %(message)s')
 
@@ -30,7 +30,8 @@ class Need_Beckup:
 																							self.now_time.month,
 																							self.now_time.year))
 			self.clear_database()
-			self.clear_datalist()
+			if date != 15:
+				self.clear_datalist()
 		else:
 			logging.debug('DONE !!!')
 			logging.debug('{0} not {1}'.format(self.now_time, 

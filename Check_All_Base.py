@@ -36,7 +36,7 @@ class All_Base:
 
 	def Set_Time(self, bus):
 		dt = datetime.datetime.now()
-		dt_string = dt.strftime('%d/%m/%Y %H:%M:%S')
+		dt_string = dt.strftime('%d.%m.%Y %H:%M:%S')
 		set_time = "UPDATE All_Complect SET VSeti = ? WHERE Komplect = ?"
 		set_time_connection = cursor.execute(set_time,[dt_string,bus])
 		connect.commit()

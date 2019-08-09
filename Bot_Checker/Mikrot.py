@@ -5,22 +5,21 @@ import re
 #logging.disable()
 logging.getLogger("paramiko").setLevel(logging.WARNING)
 #logging.disable()
-logging.basicConfig(level = logging.DEBUG, format = '%(asctime)s -- %(message)s')
+logging.basicConfig(level = logging.DEBUG, format = '%(message)s')
 
 class Mikrotik:
-
-	def __init__(self, ip = "vpnbus.test.net.ua", login = 'wifibus', password = 'BusWifi'):
+	def __init__(self, ip = "vpnbus.test.net.ua", login = 'fiway', password = 'BusWifi', timeout = 40):
 		self.ip = ip
 		self.login = login
 		self.password = password
 
 	def Connect(self): # Инициализация подключения к микротику
 		try:
-			#logging.debug(self.ip+' '+self.login)
-			#logging.debug("CONNECTION!!")
+			logging.debug(self.ip+' '+self.login)
+			logging.debug("CONNECTION!!")
 			self.ssh = paramiko.SSHClient()
 			self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-			self.ssh.connect(self.ip, port = 22, username = self.login, password = self.password, timeout = 40)
+			self.ssh.connect(self.ip, port = 22, username = self.login, password = self.password)
 			logging.debug("CONNECT TO {0} SACCESSFULL".format(self.ip))
 		except:
 			logging.debug("CONNECTION FAILED")

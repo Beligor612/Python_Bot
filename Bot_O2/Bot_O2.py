@@ -7,10 +7,12 @@ import Base_O2
 import aiogram
 import BackUp
 
-API_TOKEN = '855313094:AAFm36oeX-c72ps6itp3Icco8AQrcH4jDcY'
+#API_TOKEN = '855313094:AAFm36oeX-c72ps6itp3Icco8AQrcH4jDcY'
 #logging.disable()
-bot = aiogram.Bot(token = API_TOKEN)
-dp = aiogram.Dispatcher(bot)
+#bot = aiogram.Bot(token = API_TOKEN)
+#dp = aiogram.Dispatcher(bot)
+
+logging.basicConfig(level = logging.DEBUG, format = '--%(message)s')
 
 # 1) Получить список активных комплекто
 # 2) Взять список комплектов с О2 и сравнить их с активными
@@ -23,19 +25,19 @@ while True:
 	#Часть кода для проверки даты и создания бэкапа таблицы с траффиком по О2
 	backup = BackUp.Need_Beckup()
 	backup.check_date()
-
-	bot_mikrotik = Mikrot.Mikrotik('vpnbus.test.net.ua', 'wifibus', 'BusWifi')
+	print("I finish beckup")
+	bot_mikrotik = Mikrot.Mikrotik('vpnbus.test.net.ua', 'fiway', 'BusWifi')
 	bot_mikrotik.Connect()
 	list_All_active = bot_mikrotik.list_active_complect()
 	bot_mikrotik.close_connection()
-
+	print("I conected to complect ")
 	list_O2 = Base_O2.Database_O2()
 	bus_with_O2 = list_O2.list_bus_with_o2()
 	list_checkup = [] # Список комплектов для проверки траффика
-
 	for bus_O2 in bus_with_O2:
 		if bus_O2 in list_All_active:
 			list_checkup.append(bus_O2) # Создать список комплектов для проверки статуса
+	print("Complects to checked: {0}".format(list_checkup))
 	logging.debug("Online {0} complects with O2".format(len(list_checkup)))
 	for bus in list_checkup:
 		#logging.debug(list_O2.bus_info(bus))
@@ -56,10 +58,5 @@ while True:
 
 list_O2.close_session()
 
-#1) Создать пул дат когда необходимо делать бекап
-#2) Проверка сегодняшней даты
-#2.1) Если дата совпадает то делай бекап в папку и переименуй Бд
-#2.2) Если нет то пропускай шаг
-#3) Если произошел бекап обнули всю таблицу по трафику в 00:00
 
 
