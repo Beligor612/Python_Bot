@@ -40,6 +40,11 @@ class All_Base:
 		set_time = "UPDATE All_Complect SET VSeti = ? WHERE Komplect = ?"
 		self.cursor.execute(set_time,[dt_string,bus])
 		self.connect.commit()
+		connect2 = sqlite3.connect("ADM.db")
+		cursor2 = connect2.cursor()
+		set_time = "UPDATE Admin SET Online = ? WHERE Komplect = ?"
+		cursor2.execute(set_time,[dt_string,bus])
+		connect2.commit()
 
 	def Set_Koment(self, bus, komment):
 		#print ("Запускаю запись в БД")
