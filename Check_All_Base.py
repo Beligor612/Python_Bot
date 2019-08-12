@@ -1,14 +1,13 @@
 import sqlite3
 import time
 import datetime
-
 class All_Base:
 	connect = sqlite3.connect("DB_All_For_Complect.db")
-	cursor = connect.cursor()
+	self.cursor = connect.cursor()
 
 	def Check_From_Table(self, bus):
 		check = "SELECT Klient, Tarif1, Tarif2, Tarif3, Tarif4, Nomer1, Nomer2, Nomer3, Nomer4, VSeti, Komment From All_Complect WHERE Komplect = ?"
-		Check_Where_Komplect = cursor.execute(check, [bus]).fetchall()
+		Check_Where_Komplect = self.cursor.execute(check, [bus]).fetchall()
 		#print("CWK: ", Check_Where_Komplect, len(Check_Where_Komplect))
 		Klient = Check_Where_Komplect[0][0]
 		Tarif1 = Check_Where_Komplect[0][1]
@@ -39,7 +38,7 @@ class All_Base:
 		dt_string = dt.strftime('%d.%m.%Y %H:%M:%S')
 		set_time = "UPDATE All_Complect SET VSeti = ? WHERE Komplect = ?"
 		set_time_connection = cursor.execute(set_time,[dt_string,bus])
-		connect.commit()
+		self.connect.commit()
 
 	def Set_Koment(self, bus, komment):
 		#print ("Запускаю запись в БД")

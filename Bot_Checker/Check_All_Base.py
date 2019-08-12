@@ -38,14 +38,14 @@ class All_Base:
 		dt = datetime.datetime.now()
 		dt_string = dt.strftime('%d.%m.%Y %H:%M:%S')
 		set_time = "UPDATE All_Complect SET VSeti = ? WHERE Komplect = ?"
-		set_time_connection = self.cursor.execute(set_time,[dt_string,bus])
+		self.cursor.execute(set_time,[dt_string,bus])
 		self.connect.commit()
 
 	def Set_Koment(self, bus, komment):
 		#print ("Запускаю запись в БД")
 		print ("Koment 2 : ", komment)
 		set_koment = "UPDATE All_Complect SET Komment = ? WHERE Komplect = ?"
-		set_komment = self.cursor.execute(set_koment, [komment, bus])
+		self.cursor.execute(set_koment, [komment, bus])
 		self.connect.commit()
 		print ("Коментарий записан")
 
