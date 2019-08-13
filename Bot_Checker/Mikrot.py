@@ -3,10 +3,10 @@ import logging
 import re
 import time
 #logging.disable()
+#logging.disable()
 logging.getLogger("paramiko").setLevel(logging.WARNING)
 #logging.disable()
-logging.basicConfig(level = logging.DEBUG, format = '%(message)s')
- 
+logging.basicConfig(level = logging.DEBUG, format = '%(asctime)s -- %(message)s')
 class Mikrotik:
 	def __init__(self, ip = "vpnbus.test.net.ua", login = 'fiway', password = 'BusWifi', timeout = 40):
 		self.ip = ip
@@ -23,23 +23,24 @@ class Mikrotik:
 			logging.debug("CONNECT TO {0} SACCESSFULL".format(self.ip))
 		except:
 			logging.debug("CONNECTION FAILED")
-			
+
 	def close_connection(self): # Инициализация свертывания подключения
 		#logging.debug("Close CONNECTION!!")
 		self.ssh.close()
-	def check_speed(self, interface):
+
+	def check_speed(self, interface): # Проверка скорости на операторе
 		self.interface = interface
 		command_upload_speed = ':put ([/interface monitor-traffic {0} once as-value]->"rx-bits-per-second"+[/interface monitor-traffic {0} once as-value]->"tx-bits-per-second")'.format(interface)
-		upload_speed = self.ssh.exec_command(command_upload_speed)[1].read()
 		Total_Speed = 0
 		for i in range(5):
+			upload_speed = self.ssh.exec_command(command_upload_speed)[1].read()
 			upload_speed = round(((int(upload_speed)/1024)/1024),3)
 			Total_Speed += upload_speed
 			time.sleep(1)
 			logging.debug("Speed {0}:  {1} ".format(self.interface, upload_speed)) # Собрать суммарную скорсть с указанного интерфейса модема
 		return Total_Speed/5
 
-	def list_active_complect(self):
+	def list_active_complect(self): # Получение списка активных комплектов
 		# Проводит сканироваение списка активных комплектов и выдаем список
 		command = "/ppp active print"
 		exe_command = self.ssh.exec_command(command)[1].read()
@@ -65,7 +66,7 @@ class Mikrotik:
 
 		return active_bus_complects # Показать список активных комплектов
 
-	def trafic(self, interface):
+	def trafic(self, interface): #Получение траффика с определенного интерфейса
 		self.interface = interface
 		command_upload = "put [interface get [find name={0}] rx-byte]".format(interface)
 		command_download = "put [interface get [find name={0}] tx-byte]".format(interface)

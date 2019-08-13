@@ -6,11 +6,10 @@ import Mikrot
 import Base_O2
 import aiogram
 import BackUp
-
-#API_TOKEN = '855313094:AAFm36oeX-c72ps6itp3Icco8AQrcH4jDcY'
-#logging.disable()
-#bot = aiogram.Bot(token = API_TOKEN)
-#dp = aiogram.Dispatcher(bot)
+API_TOKEN = '855313094:AAFm36oeX-c72ps6itp3Icco8AQrcH4jDcY'
+logging.disable()
+bot = aiogram.Bot(token = API_TOKEN)
+dp = aiogram.Dispatcher(bot)
 
 logging.basicConfig(level = logging.DEBUG, format = '--%(message)s')
 
@@ -21,6 +20,24 @@ logging.basicConfig(level = logging.DEBUG, format = '--%(message)s')
 # 3.2) Подключится к микротику комплекта О2 и вытащить траффик
 # 3.3) Провести операции с траффиком и записи статусов 
 # 3.4) Вернуть статус и вывести сообщение в бот
+
+status_dict = {1 : 10000.0, 
+						2: 15000.0,
+						3: 18000.0,
+						4: 20000.0,
+						5: 30000.0,
+						6: 35000.0,
+						7: 38000.0,
+						8: 40000.0,
+						9: 50000.0,
+						10: 55000.0,
+						11: 58000.0,
+						12: 60000.0,
+						13: 70000.0,
+						14: 75000.0,
+						15: 78000.0,
+						16: 80000.0 }
+
 while True:
 	#Часть кода для проверки даты и создания бэкапа таблицы с траффиком по О2
 	backup = BackUp.Need_Beckup()
@@ -49,7 +66,9 @@ while True:
 			trafic = con_O2_mikrotik.trafic('O2')
 			logging.debug("Traffic record {0} Mb\n".format(trafic))
 			con_O2_mikrotik.close_connection()
-			list_O2.trafic_record(trafic, bus)
+			status = list_O2.trafic_record(trafic, bus)
+			if status > 0:
+				bot.send_message(386869436, " \nКлиент: {0} \n Комплект: {1} \n Статус: {2} \n Расходы: {3} GB".format(Klient ,bus, result_status, status_dict[status]))
 		except:
 			logging.debug("Error. Connection Failed !")
 			continue

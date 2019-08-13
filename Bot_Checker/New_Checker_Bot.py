@@ -17,6 +17,7 @@ class Checker:
 			return True
 		else:
 			return False
+
 	def online_bus(self, bus_number, komment):
 		pass
 
@@ -28,12 +29,11 @@ class Checker:
 		if self.check_time() == True:
 			for bus_number in self.list_acrive:
 				self.cursor_base.Set_Time(bus_number)
-				print("Time record")
 			self.database()
 
 	def insert_comment(self, bus_number = "bus0000", komment = " "):
 		self.cursor_base.Set_Koment(bus_number, komment)
-		return print ("Comment Record")
+		#return print ("Comment Record")
 	
 	def check_time(self):
 		connect = sqlite3.connect("New_Time.db")
@@ -45,13 +45,13 @@ class Checker:
 		if now_time < now:
 			return True
 		else: 
-			print ("Delta: ", now_time, " ", " Won_time: ", now)
+			#print ("Delta: ", now_time, " ", " Won_time: ", now)
 			return False
 	
 	def database(self):
 		now = datetime.datetime.now()
 		delta = datetime.timedelta(seconds = self.Randomize()) + now
-		print(self.Randomize())
+		#print(self.Randomize())
 		delta = datetime.datetime.strftime(delta, '%Y-%b-%d %I:%M:%S')
 		now = datetime.datetime.strftime(now,'%Y-%b-%d %I:%M:%S')
 		connect = sqlite3.connect("New_Time.db")
@@ -71,7 +71,7 @@ class Checker:
 		cursor = connect.cursor()
 		ssh_command = "SELECT Login, Password, IP FROM Connect WHERE Bus = ?"
 		ssh_apply = cursor.execute(ssh_command, [bus_number]).fetchall()
-		print(ssh_apply)
+		#print(ssh_apply)
 		infoarr = {'Login': ssh_apply[0][0],
 					'Password': ssh_apply[0][1],
 					'IP': ssh_apply[0][2]}
@@ -79,21 +79,11 @@ class Checker:
 		connect_mikrot = Mikrot.Mikrotik(infoarr['IP'], infoarr['Login'], infoarr['Password'])
 		connect_mikrot.Connect()
 		speed = round(connect_mikrot.check_speed(operator),2)
-		print(speed)
+		#print(speed)
 		if speed >= 0.01:
 			return True
 		else:
 			return False
-		
-
-
-
-
-	
-
-
-
-
 
 
 

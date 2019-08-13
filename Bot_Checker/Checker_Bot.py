@@ -5,15 +5,14 @@ import asyncio
 from time import ctime
 import async_timeout
 
- 
-
 API_TOKEN = '827561598:AAGquO8dzrIjwT5YbJbFFE0_GeqSiac6t0c'
-logging.getLogger("paramiko").setLevel(logging.ERROR)
-logging.basicConfig(level=logging.DEBUG, format = '--%(message)s');
+logging.getLogger("aiogram").setLevel(logging.WARNING)
+logging.basicConfig(level = logging.DEBUG, format = '--%(message)s')
+
 bot = Bot(token = API_TOKEN)
 dp = Dispatcher(bot)
 pull_complects = []
-
+pull_complects_operators = []
 
 async def Number_Complect_Converter(message):
 	number_complect = message.text.split(" ")[1]
@@ -37,11 +36,10 @@ async def Check_Komment(komment):
 				'Velcom', 'Lifecell']
 	for Op in arr_oper:
 		if Op == komment:
+			#print(Op, " ", komment)
 			await asyncio.sleep(1)
 			return True
-		else:
-			await asyncio.sleep(1)
-			return False
+	return False
 
 @dp.message_handler(commands = ['check'])
 async def check(message: types.Message):
@@ -67,9 +65,6 @@ async def online(message: types.Message):
 	await bot.send_message(message.chat.id, "Start")
 	komment = message.text.split(" ")[2:]
 	komment = ' '.join(komment)
-	if await Check_Komment(komment) == True:
-		Checker.check_operator(komment)
-		Checker.check_operator()
 	number_complect = await Number_Complect_Converter(message)
 	if number_complect not in pull_complects:
 		pull_complects.append(number_complect)
@@ -107,36 +102,31 @@ async def online(message: types.Message):
 
 @dp.message_handler(commands = ['O'])
 async def O(message: types.Message):
+	Checker = New_Checker_Bot.Checker()
 	online = True
 	await bot.send_message(message.chat.id, "Start")
 	komment = message.text.split(" ")[2:]
 	komment = ' '.join(komment)
-	if await Check_Komment(komment) == True:
-		Checker.check_operator(komment)
-		Checker.check_operator()
+	#print (" Komment: ", komment, await Check_Komment(komment))
 	number_complect = await Number_Complect_Converter(message)
-	if number_complect not in pull_complects and :
-		pull_complects.append(number_complect)
-		logging.debug("Pull Complect: {0}".format(pull_complects))
+	logging.debug("Pull Complect: {0}".format(pull_complects_operators))
+	if number_complect not in pull_complects_operators and await Check_Komment(komment) == True:
+		pull_complects_operators.append(number_complect)
 		Checker.insert_comment(number_complect, komment)
 		inform = Checker.check_inform(number_complect)
-		inform_prnt = "@{11} \n \u2705 Комплект {0} в сети \n \
-		\u26a0\ufe0f Коментарий: {12} \
-		\n Клиент:  {1} \
-		\n Тарифы: \n {2} | {3} \n {4} | {5} \n {6} | {7}\n {8} | {9}\n \
-		Сейчас в сети с оператора: {10}".format(number_complect ,
-			inform[0],inform[1],inform[5],inform[2],inform[6],inform[3],
-			inform[7],inform[4],inform[8],inform[9], message.from_user.username, komment)
+		inform_prnt = "@{0} \n \u2705 Комплект {1} в сети \n \
+		\u26a0\ufe0f С оператора {2} \
+		\n Клиент:  {3}".format(message.from_user.username, number_complect, komment, inform[0])
+		
 		while online:
+			logging.debug("Pull Complect: {0}".format(pull_complects_operators))
 			logging.debug("Start checker {0}".format(number_complect))
-			logging.debug("Pull active complect: {0}".format(pull_complects))
 			try:
 				Checker = New_Checker_Bot.Checker()
 				Online = Checker.check_bus(number_complect)
-				if Online == True and await Check_Komment(komment) == True:
-					Checker.check_operator(komment, number_complect) # Проверяем траффик
+				if Online == True and Checker.check_operator(komment, number_complect) == True:
 					await bot.send_message(message.chat.id, inform_prnt) # Отправляем сообщение
-					pull_complects.remove(number_complect) # Удаляем комплект из пула
+					pull_complects_operators.remove(number_complect) # Удаляем комплект из пула
 					await asyncio.sleep(1)
 					Online = False
 					online = False

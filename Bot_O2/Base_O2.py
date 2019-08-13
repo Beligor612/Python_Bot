@@ -63,9 +63,10 @@ class Database_O2:
 		#logging.debug("Tempora Final Trafic: {0}".format(trafic))
 		final_tempora_record = self.cursor.execute(final_tempora_command, [trafic, bus])# Записывает текущий Трафик0
 		self.connect.commit()
-		self.checkup_status(final_trafic, self.bus_info(bus)[5], bus)
+		status = self.checkup_status(final_trafic, self.bus_info(bus)[5], bus)
 		#logging.debug("Traffic record: {0} Mb at complect {1}".format(trafic, bus))
-		
+		return status
+	
 	def checkup_status(self, trafic, status, bus):
 
 		# Принимает трафик и сравниваем с порогами
@@ -94,7 +95,9 @@ class Database_O2:
 				#logging.debug("WARNING trafic UP at {0} with status {1}".format(status_trafic, status_dict[status_trafic]))
 				status = status_dict[status_trafic]
 				self.record_status(bus, status)
-		return status
+				return status
+			else:
+				return 0
 
 	def record_status(self, bus, status):
 		#logging.debug("Recording status...")

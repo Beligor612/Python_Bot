@@ -48,11 +48,11 @@ class All_Base:
 
 	def Set_Koment(self, bus, komment):
 		#print ("Запускаю запись в БД")
-		print ("Koment 2 : ", komment)
+		#print ("Koment 2 : ", komment)
 		set_koment = "UPDATE All_Complect SET Komment = ? WHERE Komplect = ?"
 		self.cursor.execute(set_koment, [komment, bus])
 		self.connect.commit()
-		print ("Коментарий записан")
+		#print ("Коментарий записан")
 
 
 
