@@ -1,8 +1,8 @@
 import sqlite3
 import logging
+import Check_All_Base
 
 logging.basicConfig(level = logging.DEBUG, format = '%(asctime)s -- %(message)s')
-
 class Database_O2:
 
 	connect = sqlite3.connect("DB_O2.db")
@@ -73,7 +73,7 @@ class Database_O2:
 		# Если трафик вышел за порог проверь его статус
 		# Если статус не соответсвует измени статус и выведи информацию
 
-		#logging.debug("Comming trafic: {0} with status {1}".format(trafic, status))
+		logging.debug("Comming trafic: {0} with status {1}".format(trafic, status))
 		status_dict = {10000.0 : 1, 
 						15000.0 : 2,
 						18000.0 : 3,
@@ -93,11 +93,13 @@ class Database_O2:
 		for status_trafic in status_dict.keys():
 			if trafic > float(status_trafic) and status == status_dict[status_trafic]-1:
 				#logging.debug("WARNING trafic UP at {0} with status {1}".format(status_trafic, status_dict[status_trafic]))
-				status = status_dict[status_trafic]
-				self.record_status(bus, status)
-				return status
-			else:
-				return 0
+				status_two = status_dict[status_trafic]
+				self.record_status(bus, status_two)
+		if status != status_two:
+			return status_two
+		else:
+			return 0
+			
 
 	def record_status(self, bus, status):
 		#logging.debug("Recording status...")
@@ -108,3 +110,10 @@ class Database_O2:
 	def close_session(self):
 		logging.debug("Close Session with database")
 		self.connect.close()
+
+	def info_client(self, bus):
+		All = Check_All_Base.All_Base()
+		All_Chec = All.Check_From_Table(bus)
+		return All_Chec
+
+

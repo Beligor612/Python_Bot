@@ -15,8 +15,8 @@ class Mikrotik:
 
 	def Connect(self): # Инициализация подключения к микротику
 		try:
-			#logging.debug(self.ip+' '+self.login)
-			#logging.debug("CONNECTION!!")
+			logging.debug(self.ip+' '+self.login)
+			logging.debug("CONNECTION!!")
 			self.ssh = paramiko.SSHClient()
 			self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 			self.ssh.connect(self.ip, port = 22, username = self.login, password = self.password, timeout = 40)
@@ -25,7 +25,7 @@ class Mikrotik:
 			logging.debug("CONNECTION FAILED")
 			
 	def close_connection(self): # Инициализация свертывания подключения
-		#logging.debug("Close CONNECTION!!")
+		logging.debug("Close CONNECTION!!")
 		self.ssh.close()
 
 	def list_active_complect(self):
