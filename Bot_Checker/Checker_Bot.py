@@ -82,6 +82,7 @@ async def online(message: types.Message):
 			logging.debug("Start checker {0}".format(number_complect))
 			logging.debug("Pull active complect: {0}".format(pull_complects))
 			try:
+				Checker = New_Checker_Bot.Checker()
 				Online = Checker.check_bus(number_complect)
 				if Online == True:
 					await bot.send_message(message.chat.id, inform_prnt)
@@ -100,7 +101,7 @@ async def online(message: types.Message):
 	else:
 		await bot.send_message(message.chat.id, "\u26a0\ufe0f Checked already running")
 
-@dp.message_handler(commands = ['O'])
+@dp.message_handler(commands = ['pray'])
 async def O(message: types.Message):
 	Checker = New_Checker_Bot.Checker()
 	online = True
